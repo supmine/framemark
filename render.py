@@ -44,7 +44,7 @@ SHAPES = {"1:1": 1.0, "4:5": 4 / 5, "3:4": 3 / 4}
 
 @dataclass
 class Options:
-    shape: str = "4:5"         # "orig" or a key of SHAPES
+    shape: str = "3:4"         # "orig" or a key of SHAPES
     layout: str = "lr"         # "lr" settings left / logo right · "pro" logo left / settings right · "center"
     color: str = "white"       # key of PALETTE
     pad: float = 0.035         # border thickness relative to photo size
@@ -515,7 +515,7 @@ def _cli():
     ap = argparse.ArgumentParser(description="Add an EXIF caption frame to photos")
     ap.add_argument("files", nargs="+")
     ap.add_argument("--out", default="framed")
-    ap.add_argument("--shape", choices=["orig", *SHAPES], default="4:5")
+    ap.add_argument("--shape", choices=["orig", *SHAPES], default="3:4")
     ap.add_argument("--color", choices=list(PALETTE), default="white")
     ap.add_argument("--layout", choices=["lr", "pro", "center"], default="lr")
     ap.add_argument("--quality", choices=["jpg95", "jpg100", "png"], default="jpg95")
