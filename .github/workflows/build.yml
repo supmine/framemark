@@ -43,7 +43,9 @@ jobs:
           pip install -r requirements.txt pyinstaller==6.22.3
 
       - name: Build
-        run: pyinstaller --noconfirm framemark.spec
+        run: |
+          case "$GITHUB_REF_NAME" in v*) export FRAMEMARK_VERSION="${GITHUB_REF_NAME#v}" ;; esac
+          pyinstaller --noconfirm framemark.spec
 
       - name: Smoke test (render a photo with the built binary)
         run: |

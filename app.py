@@ -8,7 +8,7 @@ from dataclasses import asdict, replace
 
 from PIL import Image
 from PySide6.QtCore import QObject, QRunnable, QSettings, QSize, Qt, QThreadPool, QTimer, Signal
-from PySide6.QtGui import QAction, QImage, QKeySequence, QPixmap
+from PySide6.QtGui import QAction, QIcon, QImage, QKeySequence, QPixmap
 from PySide6.QtWidgets import (
     QApplication, QButtonGroup, QCheckBox, QFileDialog, QFormLayout, QFrame, QGridLayout, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem, QMainWindow, QMessageBox, QProgressBar,
@@ -657,6 +657,7 @@ def main():
         return
     app = QApplication(sys.argv)
     app.setApplicationName("Sony Exif Frame")
+    app.setWindowIcon(QIcon(os.path.join(render.HERE, "assets", "icon.png")))
     app.setStyleSheet(STYLE)
     w = Main()
     w.show()
