@@ -3,7 +3,7 @@
 Local desktop app (macOS) that adds a Cameramark-style caption frame to Sony photos: ISO · ƒ · shutter, date, a sharp SONY logo, camera model and lens, all read from EXIF.
 
 - Layouts: settings | logo, logo | settings, centred
-- Shapes: original, 1:1, 4:5 · six frame colours · border / text size
+- Shapes: 4:5 (default, Instagram feed), 1:1, original · six frame colours · border / text size
 - Optional focal length, 35mm equivalent (APS-C), α model names
 - Full-resolution output (JPEG 95/100, PNG), original EXIF and colour profile kept
 - Batch: drop many photos or a folder

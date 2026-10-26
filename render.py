@@ -40,7 +40,7 @@ IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".heic", ".heif
 
 @dataclass
 class Options:
-    shape: str = "orig"        # "orig" | "1:1" | "4:5"
+    shape: str = "4:5"         # "orig" | "1:1" | "4:5" (Instagram feed)
     layout: str = "lr"         # "lr" settings left / logo right · "pro" logo left / settings right · "center"
     color: str = "white"       # key of PALETTE
     pad: float = 0.035         # border thickness relative to photo size
@@ -512,7 +512,7 @@ def _cli():
     ap = argparse.ArgumentParser(description="Add an EXIF caption frame to photos")
     ap.add_argument("files", nargs="+")
     ap.add_argument("--out", default="framed")
-    ap.add_argument("--shape", choices=["orig", "1:1", "4:5"], default="orig")
+    ap.add_argument("--shape", choices=["orig", "1:1", "4:5"], default="4:5")
     ap.add_argument("--color", choices=list(PALETTE), default="white")
     ap.add_argument("--layout", choices=["lr", "pro", "center"], default="lr")
     ap.add_argument("--quality", choices=["jpg95", "jpg100", "png"], default="jpg95")
