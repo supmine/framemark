@@ -18,7 +18,7 @@ Binaries for macOS (Apple Silicon), Windows and Linux are on the Releases page. 
 git tag v1.0.0 && git push origin v1.0.0
 ```
 
-- **macOS with Homebrew** (recommended): `brew install --cask supmine/framemark/framemark`, update with `brew upgrade --cask framemark`.
+- **macOS with Homebrew** (recommended): `brew tap supmine/framemark && brew trust supmine/framemark && brew install --cask framemark`, update with `brew upgrade --cask framemark`.
 - **macOS by hand**: unzip, move `Framemark.app` to Applications. The app is unsigned, so the first time right-click → Open (or run `xattr -dr com.apple.quarantine /Applications/Framemark.app`).
 - **Windows**: run `Framemark-windows-x64.exe`. SmartScreen may warn about an unknown publisher → More info → Run anyway.
 - **Linux**: `tar -xzf Framemark-linux-x64.tar.gz && ./Framemark`. Needs the usual Qt/X11 libraries (on Ubuntu: `sudo apt install libxcb-cursor0 libegl1 libxkbcommon-x11-0`).
