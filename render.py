@@ -38,9 +38,13 @@ IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".heic", ".heif
 
 # ---------------------------------------------------------------- options
 
+# width / height of each fixed output shape
+SHAPES = {"1:1": 1.0, "4:5": 4 / 5, "3:4": 3 / 4}
+
+
 @dataclass
 class Options:
-    shape: str = "4:5"         # "orig" | "1:1" | "4:5" (Instagram feed)
+    shape: str = "4:5"         # "orig" or a key of SHAPES
     layout: str = "lr"         # "lr" settings left / logo right · "pro" logo left / settings right · "center"
     color: str = "white"       # key of PALETTE
     pad: float = 0.035         # border thickness relative to photo size
@@ -333,16 +337,15 @@ class Geom:
 
 
 def geom(iw, ih, o: Options) -> Geom:
-    # square / 4:5 size the caption from the long side, so wide photos don't get tiny text
+    # fixed shapes size the caption from the long side, so wide photos don't get tiny text
     s = min(iw, ih) if o.shape == "orig" else max(iw, ih) * 0.85
     pad = round(s * o.pad)
     bar = round(s * 0.11 * bar_scale(o.ts) * (1.45 if o.layout == "center" else 1))
     bw, bh = iw + pad * 2, ih + pad + bar
     W, H = bw, bh
-    if o.shape == "1:1":
-        W = H = max(bw, bh)
-    elif o.shape == "4:5":
-        r = 4 / 5
+    r = SHAPES.get(o.shape)
+    if r:
+        # grow the canvas in one direction only; the photo + caption block stays centered
         if bw / bh > r:
             W, H = bw, round(bw / r)
         else:
@@ -512,7 +515,7 @@ def _cli():
     ap = argparse.ArgumentParser(description="Add an EXIF caption frame to photos")
     ap.add_argument("files", nargs="+")
     ap.add_argument("--out", default="framed")
-    ap.add_argument("--shape", choices=["orig", "1:1", "4:5"], default="4:5")
+    ap.add_argument("--shape", choices=["orig", *SHAPES], default="4:5")
     ap.add_argument("--color", choices=list(PALETTE), default="white")
     ap.add_argument("--layout", choices=["lr", "pro", "center"], default="lr")
     ap.add_argument("--quality", choices=["jpg95", "jpg100", "png"], default="jpg95")

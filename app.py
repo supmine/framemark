@@ -187,7 +187,7 @@ class Main(QMainWindow):
         style = QGroupBox("รูปแบบ")
         sf = QFormLayout(style)
         self.seg_layout = Seg([("lr", "ค่า | โลโก้"), ("pro", "โลโก้ | ค่า"), ("center", "กลาง")], "lr")
-        self.seg_shape = Seg([("orig", "ตามภาพ"), ("1:1", "1:1"), ("4:5", "4:5 IG")], "4:5")
+        self.seg_shape = Seg([("orig", "ตามภาพ"), ("1:1", "1:1"), ("4:5", "4:5"), ("3:4", "3:4")], "4:5")
         self.seg_pad = Seg([("0.022", "บาง"), ("0.035", "ปกติ"), ("0.055", "หนา")], "0.035")
         self.seg_ts = Seg([("1", "เล็ก"), ("1.3", "กลาง"), ("1.65", "ใหญ่")], "1.3")
         sf.addRow("เลย์เอาต์", self.seg_layout)
