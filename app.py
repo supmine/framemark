@@ -643,13 +643,18 @@ QPushButton[seg="first"] { border-top-left-radius: 6px; border-bottom-left-radiu
 QPushButton[seg="last"] { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
 QPushButton[primary="true"] { background: #1f5e7a; color: white; border-color: #1f5e7a; font-weight: 600; padding: 8px 14px; }
 QPushButton[primary="true"]:disabled { background: #7f9aa7; border-color: #7f9aa7; }
-QLineEdit { padding: 5px 7px; border-radius: 5px; border: 1px solid palette(mid); font-family: Menlo; }
+QLineEdit { padding: 5px 7px; border-radius: 5px; border: 1px solid palette(mid); font-family: Menlo, Consolas, monospace; }
 QListWidget { border-radius: 8px; border: 1px solid palette(mid); }
 QListWidget::item { padding: 4px; }
 """
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "render":
+        # headless batch mode, same flags as render.py: Framemark render a.jpg b.jpg --shape 4:5
+        sys.argv = [sys.argv[0]] + sys.argv[2:]
+        render._cli()
+        return
     app = QApplication(sys.argv)
     app.setApplicationName("Sony Exif Frame")
     app.setStyleSheet(STYLE)

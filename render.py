@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import os
 import re
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from functools import lru_cache
@@ -20,11 +21,17 @@ try:  # optional: open HEIC/HEIF straight from iPhone / newer cameras
 except Exception:
     pass
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+# inside a PyInstaller build the bundled files live under sys._MEIPASS
+HERE = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
 DEFAULT_LOGO = os.path.join(HERE, "assets", "logo-sony.webp")
 
-FONT_FILE = "/System/Library/Fonts/HelveticaNeue.ttc"
-FONT_INDEX = {400: 0, 500: 10, 600: 1, 700: 1}  # Regular, Medium, Bold, Bold
+# macOS: Helvetica Neue from the system. Windows / Linux: bundled Inter.
+HELVETICA = "/System/Library/Fonts/HelveticaNeue.ttc"
+INTER = {w: os.path.join(HERE, "assets", "fonts", f"Inter-{n}.ttf") for w, n in ((400, "Regular"), (600, "SemiBold"))}
+if os.path.exists(HELVETICA):
+    FONT_FACES = {400: (HELVETICA, 0), 500: (HELVETICA, 10), 600: (HELVETICA, 1), 700: (HELVETICA, 1)}
+else:
+    FONT_FACES = {400: (INTER[400], 0), 500: (INTER[600], 0), 600: (INTER[600], 0), 700: (INTER[600], 0)}
 
 IMAGE_EXTS = (".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".heic", ".heif")
 
@@ -301,7 +308,8 @@ PALETTE = {
 
 @lru_cache(maxsize=64)
 def _font(weight: int, size_q: int) -> ImageFont.FreeTypeFont:
-    return ImageFont.truetype(FONT_FILE, max(1, size_q / 4), index=FONT_INDEX[weight])
+    path, index = FONT_FACES[weight]
+    return ImageFont.truetype(path, max(1, size_q / 4), index=index)
 
 
 def font(weight, px):
