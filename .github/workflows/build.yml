@@ -62,8 +62,9 @@ jobs:
             Windows) BIN=dist/Framemark.exe ;;
             Linux)   BIN=dist/Framemark ;;
           esac
-          "$BIN" render smoke.jpg --out smoke-out
-          test -s smoke-out/smoke-frame.jpg
+          # pin the shape so the output name doesn't depend on the app's default
+          "$BIN" render smoke.jpg --shape 3:4 --out smoke-out
+          test -s smoke-out/smoke-frame-3x4.jpg
 
       - name: Package
         run: |
